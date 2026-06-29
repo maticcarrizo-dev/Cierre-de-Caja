@@ -5,7 +5,6 @@
   <title>Acceso</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    /* Usamos la misma estética minimalista */
     body { font-family: -apple-system, sans-serif; background: #f5f5f7; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
     .card { background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 300px; }
     input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #d2d2d7; border-radius: 12px; box-sizing: border-box; }
@@ -22,19 +21,26 @@
 </div>
 
 <script>
-  // 1. Busca estos valores en tu panel de Supabase: Project Settings > API
-  const supabase = supabase.createClient('TU_URL', 'TU_ANON_KEY');
+  // CORRECCIÓN: Usamos un nombre de variable distinto (supabaseClient) 
+  // para no entrar en conflicto con la librería.
+  const supabaseClient = supabase.createClient(
+    'https://wbxwgboiwmabaskyeukj.supabase.co', 
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndieHdnYm9pd21hYmFza3lldWtqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NTg4MzksImV4cCI6MjA5ODMzNDgzOX0.JFFD5Z3k8j0PManMCMyrj1HMmFzR56rCKT7RAK3ln0g'
+  );
 
   async function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    // CORRECCIÓN: Usamos supabaseClient para acceder al método auth
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ 
+      email: email, 
+      password: password 
+    });
 
     if (error) {
       alert("Error: " + error.message);
     } else {
-      // Si el login es exitoso, redirigimos al menú (index.html)
       window.location.href = 'index.html';
     }
   }
