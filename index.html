@@ -312,4 +312,6 @@
 💳 Ventas Postnet: ${fmt(ventasPostnet)}
 💵 Ventas efectivo: ${fmt(ventasEfectivo)}
 🏧 Caja retirada: ${fmt(cajaRetirar)}
-🔄 Cambio turno siguiente: ${fmt(cambioSig)}; const numero = '5491178276588'; const url =  https://whatsapp.com{numero}&text=${encodeURIComponent(mensaje)}`;const toast = document.getElementById('toast');toast.classList.add('show');setTimeout(() => toast.classList.remove('show'), 2500);setTimeout(() => window.open(url, '_blank'), 300);}
+🔄 Cambio turno siguiente: ${fmt(cambioSig)}
+; const numero = '5491178276588'; 
+const url =  https://whatsapp.com{numero}&text=${encodeURIComponent(mensaje)}`;const toast = document.getElementById('toast');toast.classList.add('show');setTimeout(() => {toast.classList.remove('show');window.location.href = url; // Envía directo en vez de abrir una ventana popup bloqueable}, 400);}
