@@ -275,11 +275,15 @@
 <script>
   let turnoSeleccionado = '';
   const now = new Date();
+  
+  // SOLUCIÓN AL PROBLEMA DEL DÍA: Forzado estricto a Español de Argentina
   const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   const fechaLarga = now.toLocaleDateString('es-AR', opciones);
   const fechaCorta = now.toLocaleDateString('es-AR');
+  
   document.getElementById('dateLabel').textContent = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
   document.getElementById('headerDate').textContent = fechaCorta;
+
   function selectTurno(turno) {
     turnoSeleccionado = turno;
     document.getElementById('btnManana').classList.toggle('active', turno === 'Mañana');
@@ -307,4 +311,5 @@
 💰 Total en caja: ${fmt(totalCaja)}
 💳 Ventas Postnet: ${fmt(ventasPostnet)}
 💵 Ventas efectivo: ${fmt(ventasEfectivo)}
-🏧 Caja retirada: ${fmt(cajaRetirar)}🔄 Cambio turno siguiente: ${fmt(cambioSig)}; const numero = '5491178276588'; const url = wa.me{numero}?text=${encodeURIComponent(mensaje)}`;const toast = document.getElementById('toast');toast.classList.add('show');setTimeout(() => toast.classList.remove('show'), 2500);setTimeout(() => window.open(url, '_blank'), 300);}
+🏧 Caja retirada: ${fmt(cajaRetirar)}
+🔄 Cambio turno siguiente: ${fmt(cambioSig)}; const numero = '5491178276588'; const url = wa.me{numero}?text=${encodeURIComponent(mensaje)}`;const toast = document.getElementById('toast');toast.classList.add('show');setTimeout(() => toast.classList.remove('show'), 2500);setTimeout(() => window.open(url, '_blank'), 300);}
