@@ -6,6 +6,409 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Cierre de Caja</title>
   <style>
+      /* Tipografía y reset */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    
+
+    :root {
+
+      --bg-color: #fbfbfd;
+
+      --card-bg: #ffffff;
+
+      --text-main: #1d1d1f;
+
+      --text-muted: #86868b;
+
+      --border-color: #d2d2d7;
+
+      --blue-accent: #0071e3;
+
+      --blue-hover: #0077ed;
+
+      --control-bg: #e8e8ed;
+
+    }
+
+
+
+    body {
+
+      background-color: var(--bg-color);
+
+      color: var(--text-main);
+
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+      min-height: 100vh;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      -webkit-font-smoothing: antialiased;
+
+      padding: 20px;
+
+    }
+
+
+
+    .widget-container {
+
+      background: var(--card-bg);
+
+      width: 100%;
+
+      max-width: 460px;
+
+      border-radius: 18px;
+
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+
+      border: 1px solid rgba(0, 0, 0, 0.04);
+
+      overflow: hidden;
+
+    }
+
+
+
+    header {
+
+      padding: 24px 32px 16px;
+
+      text-align: center;
+
+      border-bottom: 1px solid var(--border-color);
+
+    }
+
+
+
+    header h1 {
+
+      font-size: 24px;
+
+      font-weight: 600;
+
+      letter-spacing: -0.5px;
+
+      margin-bottom: 4px;
+
+    }
+
+
+
+    header span {
+
+      font-size: 13px;
+
+      color: var(--text-muted);
+
+      font-weight: 500;
+
+    }
+
+
+
+    .content {
+
+      padding: 24px 32px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 24px;
+
+    }
+
+
+
+    .section-title {
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+      color: var(--text-main);
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.5px;
+
+      margin-bottom: 12px;
+
+    }
+
+
+
+    .segmented-control {
+
+      background: var(--control-bg);
+
+      border-radius: 8px;
+
+      display: flex;
+
+      padding: 2px;
+
+    }
+
+
+
+    .shift-btn {
+
+      flex: 1;
+
+      background: transparent;
+
+      border: none;
+
+      border-radius: 6px;
+
+      color: var(--text-main);
+
+      font-size: 13px;
+
+      font-weight: 500;
+
+      padding: 6px 12px;
+
+      cursor: pointer;
+
+      transition: all 0.2s ease;
+
+      font-family: inherit;
+
+    }
+
+
+
+    .shift-btn.active {
+
+      background: var(--card-bg);
+
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+      font-weight: 600;
+
+    }
+
+
+
+    .form-group {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 12px;
+
+    }
+
+
+
+    .field {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding-bottom: 12px;
+
+      border-bottom: 1px solid var(--border-color);
+
+    }
+
+
+
+    .field:last-child {
+
+      border-bottom: none;
+
+      padding-bottom: 0;
+
+    }
+
+
+
+    label {
+
+      font-size: 14px;
+
+      color: var(--text-main);
+
+      font-weight: 400;
+
+    }
+
+
+
+    .input-wrap {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: flex-end;
+
+      width: 50%;
+
+    }
+
+
+
+    .currency-symbol {
+
+      color: var(--text-muted);
+
+      font-size: 14px;
+
+      margin-right: 4px;
+
+    }
+
+
+
+    input[type="number"] {
+
+      width: 100%;
+
+      background: transparent;
+
+      border: none;
+
+      color: var(--text-main);
+
+      font-family: inherit;
+
+      font-size: 15px;
+
+      font-weight: 400;
+
+      text-align: right;
+
+      outline: none;
+
+    }
+
+    
+
+    input[type="number"]::placeholder {
+
+      color: var(--text-muted);
+
+    }
+
+
+
+    .submit-btn {
+
+      width: 100%;
+
+      background: var(--blue-accent);
+
+      border: none;
+
+      border-radius: 8px;
+
+      color: #ffffff;
+
+      font-family: inherit;
+
+      font-size: 15px;
+
+      font-weight: 400;
+
+      padding: 12px;
+
+      cursor: pointer;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      transition: background 0.2s;
+
+      margin-top: 8px;
+
+    }
+
+
+
+    .submit-btn:hover {
+
+      background: var(--blue-hover);
+
+    }
+
+
+
+    .submit-btn svg {
+
+      width: 16px;
+
+      height: 16px;
+
+      fill: #ffffff;
+
+    }
+
+
+
+    .toast {
+
+      position: fixed;
+
+      top: 20px;
+
+      left: 50%;
+
+      transform: translateX(-50%) translateY(-100px);
+
+      background: rgba(29, 29, 31, 0.9);
+
+      backdrop-filter: blur(10px);
+
+      -webkit-backdrop-filter: blur(10px);
+
+      color: #fff;
+
+      font-size: 13px;
+
+      font-weight: 400;
+
+      padding: 10px 20px;
+
+      border-radius: 20px;
+
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+      pointer-events: none;
+
+      z-index: 100;
+
+    }
+
+
+
+    .toast.show {
+
+      transform: translateX(-50%) translateY(0);
+
+    }
     :root { --bg: #fbfbfd; --text: #1d1d1f; --blue: #0071e3; --gray: #d2d2d7; }
     body { background: var(--bg); font-family: -apple-system, sans-serif; padding: 20px; display: flex; justify-content: center; }
     .container { width: 100%; max-width: 460px; background: white; padding: 24px; border-radius: 18px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
