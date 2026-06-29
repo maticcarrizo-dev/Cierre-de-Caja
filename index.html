@@ -4,17 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Cierre de Caja</title>
+  
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0071e3" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Caja" />
+
   <style>
     /* Tipografía y reset */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     :root {
-      --bg-color: #fbfbfd;         /* Fondo web clásico de Apple */
+      --bg-color: #fbfbfd;
       --card-bg: #ffffff;
-      --text-main: #1d1d1f;        /* Color de texto principal Apple */
-      --text-muted: #86868b;       /* Color de texto secundario */
-      --border-color: #d2d2d7;     /* Bordes finos */
-      --blue-accent: #0071e3;      /* Azul web de Apple */
+      --text-main: #1d1d1f;
+      --text-muted: #86868b;
+      --border-color: #d2d2d7;
+      --blue-accent: #0071e3;
       --blue-hover: #0077ed;
       --control-bg: #e8e8ed;
     }
@@ -31,7 +40,6 @@
       padding: 20px;
     }
 
-    /* Contenedor principal estilo Widget/Modal de iCloud */
     .widget-container {
       background: var(--card-bg);
       width: 100%;
@@ -77,7 +85,6 @@
       margin-bottom: 12px;
     }
 
-    /* Segmented Control estilo macOS/iCloud Web */
     .segmented-control {
       background: var(--control-bg);
       border-radius: 8px;
@@ -105,7 +112,6 @@
       font-weight: 600;
     }
 
-    /* Campos de formulario limpios */
     .form-group {
       display: flex;
       flex-direction: column;
@@ -160,7 +166,6 @@
       color: var(--text-muted);
     }
 
-    /* Botón de acción principal Apple */
     .submit-btn {
       width: 100%;
       background: var(--blue-accent);
@@ -190,7 +195,6 @@
       fill: #ffffff;
     }
 
-    /* Notificación limpia */
     .toast {
       position: fixed;
       top: 20px;
@@ -227,7 +231,6 @@
     <input type="hidden" name="text" id="wspTexto" value="" />
 
     <div class="content">
-      
       <div>
         <div class="section-title">Turno de trabajo</div>
         <div class="segmented-control">
@@ -339,7 +342,6 @@
     const cajaRetirar    = document.getElementById('cajaRetirar').value;
     const cambioSig      = document.getElementById('cambioSiguiente').value;
     
-    // Mensaje limpio, sin emoticones, formato profesional.
     const mensaje =
 `CIERRE DE CAJA
 Fecha: ${fechaCorta}
@@ -357,6 +359,15 @@ Cambio turno siguiente: ${fmt(cambioSig)}`;
     const toast = document.getElementById('toast');
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  // REGISTRO DEL SERVICE WORKER (Para la PWA)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('Service Worker registrado con éxito', reg))
+        .catch(err => console.error('Error al registrar el Service Worker', err));
+    });
   }
 </script>
 </body>
