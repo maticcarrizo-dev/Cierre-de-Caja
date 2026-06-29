@@ -1,0 +1,17 @@
+{
+  "name": "Control de Caja",
+  "short_name": "Caja",
+  "description": "Formulario de cierre de caja rápido para envío por WhatsApp.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#fbfbfd",
+  "theme_color": "#0071e3",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2454/2454261.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
