@@ -7,14 +7,13 @@
   <style>
     :root {
       --bg: #f5f5f7;
-      --card-bg: #ffffff;
+      --icon-placeholder: #e5e5ea;
       --text: #1d1d1f;
     }
 
     body {
       background-color: var(--bg);
       color: var(--text);
-      /* Font stack de Apple */
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
       margin: 0;
       padding: 80px 20px;
@@ -37,8 +36,9 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 30px;
+      /* Ajuste dinámico para que se vea bien en móvil y escritorio */
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
     }
 
     .app-box {
@@ -47,34 +47,27 @@
       align-items: center;
       text-decoration: none;
       color: var(--text);
+      transition: opacity 0.2s ease;
     }
 
-    .icon-container {
+    .app-box:hover { opacity: 0.7; }
+    .app-box:active { transform: scale(0.95); }
+
+    /* Placeholder circular minimalista */
+    .icon-placeholder {
       width: 120px;
       height: 120px;
-      background: var(--card-bg);
-      border-radius: 28px; /* Radio de esquina estilo Apple */
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background-color: var(--icon-placeholder);
+      border-radius: 28px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 12px;
-      transition: transform 0.2s ease;
-      overflow: hidden;
-    }
-
-    .app-box:active .icon-container { transform: scale(0.92); }
-
-    .icon-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
     }
 
     .label {
       font-size: 14px;
       font-weight: 400;
-      opacity: 0.8;
     }
   </style>
 </head>
@@ -83,38 +76,28 @@
 <div class="container">
   <h1>Bienvenido.</h1>
 
- <div class="grid">
-    <!-- Cierre -->
+  <div class="grid">
     <a href="cierre.html" class="app-box">
-      <div class="icon-container">
-        <img src="cierre_icono_azul.png" alt="Cierre">
-      </div>
+      <div class="icon-placeholder"></div>
       <span class="label">Cierre</span>
     </a>
 
-    <!-- Pedidos -->
     <a href="#" class="app-box">
-      <div class="icon-container">
-        <img src="pedidos_icono_naranja.png" alt="Pedidos">
-      </div>
+      <div class="icon-placeholder"></div>
       <span class="label">Pedidos</span>
     </a>
 
-    <!-- Reportes -->
     <a href="#" class="app-box">
-      <div class="icon-container">
-        <img src="reportes_icono_verde.png" alt="Reportes">
-      </div>
+      <div class="icon-placeholder"></div>
       <span class="label">Reportes</span>
     </a>
 
-    <!-- Ajustes -->
     <a href="#" class="app-box">
-      <div class="icon-container">
-        <img src="icons8-apple-settings-512.png" alt="Ajustes">
-      </div>
+      <div class="icon-placeholder"></div>
       <span class="label">Ajustes</span>
     </a>
   </div>
-  </body>
+</div>
+
+</body>
 </html>
