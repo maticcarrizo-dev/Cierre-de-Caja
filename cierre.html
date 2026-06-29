@@ -5,375 +5,55 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Cierre de Caja</title>
-  
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#0071e3" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Caja" />
-
   <style>
-    /* Tipografía y reset */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    :root {
-      --bg-color: #fbfbfd;
-      --card-bg: #ffffff;
-      --text-main: #1d1d1f;
-      --text-muted: #86868b;
-      --border-color: #d2d2d7;
-      --blue-accent: #0071e3;
-      --blue-hover: #0077ed;
-      --control-bg: #e8e8ed;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      -webkit-font-smoothing: antialiased;
-      padding: 20px;
-    }
-
-    .widget-container {
-      background: var(--card-bg);
-      width: 100%;
-      max-width: 460px;
-      border-radius: 18px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba(0, 0, 0, 0.04);
-      overflow: hidden;
-    }
-
-    header {
-      padding: 24px 32px 16px;
-      text-align: center;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    header h1 {
-      font-size: 24px;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-      margin-bottom: 4px;
-    }
-
-    header span {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .content {
-      padding: 24px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .section-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-main);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
-    }
-
-    .segmented-control {
-      background: var(--control-bg);
-      border-radius: 8px;
-      display: flex;
-      padding: 2px;
-    }
-
-    .shift-btn {
-      flex: 1;
-      background: transparent;
-      border: none;
-      border-radius: 6px;
-      color: var(--text-main);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 6px 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-
-    .shift-btn.active {
-      background: var(--card-bg);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      font-weight: 600;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .field {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .field:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    label {
-      font-size: 14px;
-      color: var(--text-main);
-      font-weight: 400;
-    }
-
-    .input-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      width: 50%;
-    }
-
-    .currency-symbol {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-right: 4px;
-    }
-
-    input[type="number"] {
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: var(--text-main);
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 400;
-      text-align: right;
-      outline: none;
-    }
-    
-    input[type="number"]::placeholder {
-      color: var(--text-muted);
-    }
-
-    .submit-btn {
-      width: 100%;
-      background: var(--blue-accent);
-      border: none;
-      border-radius: 8px;
-      color: #ffffff;
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 400;
-      padding: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s;
-      margin-top: 8px;
-    }
-
-    .submit-btn:hover {
-      background: var(--blue-hover);
-    }
-
-    .submit-btn svg {
-      width: 16px;
-      height: 16px;
-      fill: #ffffff;
-    }
-
-    .toast {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100px);
-      background: rgba(29, 29, 31, 0.9);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 400;
-      padding: 10px 20px;
-      border-radius: 20px;
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      pointer-events: none;
-      z-index: 100;
-    }
-
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-    }
+    :root { --bg-color: #fbfbfd; --card-bg: #ffffff; --text-main: #1d1d1f; --blue-accent: #0071e3; }
+    body { background-color: var(--bg-color); color: var(--text-main); font-family: -apple-system, sans-serif; padding: 20px; display: flex; justify-content: center; }
+    .widget-container { background: var(--card-bg); width: 100%; max-width: 460px; border-radius: 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); padding: 24px; }
+    .field { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #d2d2d7; }
+    input { border: none; text-align: right; outline: none; font-size: 15px; }
+    .submit-btn { width: 100%; background: var(--blue-accent); color: white; border: none; border-radius: 8px; padding: 12px; cursor: pointer; margin-top: 20px; }
   </style>
 </head>
 <body>
 
 <div class="widget-container">
-  <header>
-    <h1>Cierre de Caja</h1>
-    <span id="dateLabel">Cargando fecha...</span>
-  </header>
-
-  <form id="formCaja" action="https://api.whatsapp.com/send" method="GET" onsubmit="validarYEnviar(event)">
-    <input type="hidden" name="phone" value="5491178276588" />
-    <input type="hidden" name="text" id="wspTexto" value="" />
-
-    <div class="content">
-      <div>
-        <div class="section-title">Turno de trabajo</div>
-        <div class="segmented-control">
-          <button type="button" class="shift-btn" id="btnManana" onclick="selectTurno('Mañana')">Mañana</button>
-          <button type="button" class="shift-btn" id="btnTarde" onclick="selectTurno('Tarde')">Tarde</button>
-        </div>
-      </div>
-
-      <div>
-        <div class="section-title">Ventas del turno</div>
-        <div class="form-group">
-          <div class="field">
-            <label>Total en caja</label>
-            <div class="input-wrap">
-              <span class="currency-symbol">$</span>
-              <input type="number" id="totalCaja" placeholder="0.00" inputmode="decimal" />
-            </div>
-          </div>
-          <div class="field">
-            <label>Ventas Postnet</label>
-            <div class="input-wrap">
-              <span class="currency-symbol">$</span>
-              <input type="number" id="ventasPostnet" placeholder="0.00" inputmode="decimal" />
-            </div>
-          </div>
-          <div class="field">
-            <label>Ventas efectivo</label>
-            <div class="input-wrap">
-              <span class="currency-symbol">$</span>
-              <input type="number" id="ventasEfectivo" placeholder="0.00" inputmode="decimal" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="section-title">Movimientos finales</div>
-        <div class="form-group">
-          <div class="field">
-            <label>Caja a retirar</label>
-            <div class="input-wrap">
-              <span class="currency-symbol">$</span>
-              <input type="number" id="cajaRetirar" placeholder="0.00" inputmode="decimal" />
-            </div>
-          </div>
-          <div class="field">
-            <label>Cambio siguiente</label>
-            <div class="input-wrap">
-              <span class="currency-symbol">$</span>
-              <input type="number" id="cambioSiguiente" placeholder="0.00" inputmode="decimal" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button type="submit" class="submit-btn">
-        <svg viewBox="0 0 24 24" xmlns="http://w3.org/2000/svg">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-        </svg>
-        Enviar Cierre
-      </button>
-
-    </div>
+  <h1>Cierre de Caja</h1>
+  <form id="formCaja" onsubmit="procesarCierre(event)">
+    <div class="field"><label>Total caja</label><input type="number" id="totalCaja" required /></div>
+    <div class="field"><label>Postnet</label><input type="number" id="ventasPostnet" required /></div>
+    <div class="field"><label>Efectivo</label><input type="number" id="ventasEfectivo" required /></div>
+    <button type="submit" class="submit-btn">Guardar y Enviar</button>
   </form>
 </div>
 
-<div class="toast" id="toast">Transfiriendo a WhatsApp...</div>
-
 <script>
-  let turnoSeleccionado = '';
-  let fechaCorta = '';
-
-  try {
-    const now = new Date();
-    fechaCorta = now.toLocaleDateString('es-AR');
-    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    let fechaLarga = now.toLocaleDateString('es-AR', opciones);
-    if (fechaLarga && fechaLarga.length > 0) {
-      fechaLarga = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
-    }
-    document.getElementById('dateLabel').textContent = fechaLarga || fechaCorta;
-  } catch (e) {
-    const d = new Date();
-    fechaCorta = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
-    document.getElementById('dateLabel').textContent = fechaCorta;
-  }
-
-  function selectTurno(turno) {
-    turnoSeleccionado = turno;
-    document.getElementById('btnManana').classList.toggle('active', turno === 'Mañana');
-    document.getElementById('btnTarde').classList.toggle('active', turno === 'Tarde');
-  }
-
-  function fmt(val) {
-    const n = parseFloat(val) || 0;
-    return '$' + n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-
-  function validarYEnviar(event) {
-    if (!turnoSeleccionado) {
-      event.preventDefault();
-      alert('Por favor, selecciona el turno antes de enviar.');
-      return;
-    }
-    
-    const totalCaja      = document.getElementById('totalCaja').value;
-    const ventasPostnet  = document.getElementById('ventasPostnet').value;
-    const ventasEfectivo = document.getElementById('ventasEfectivo').value;
-    const cajaRetirar    = document.getElementById('cajaRetirar').value;
-    const cambioSig      = document.getElementById('cambioSiguiente').value;
-    
-    const mensaje =
-`CIERRE DE CAJA
-Fecha: ${fechaCorta}
-Turno: ${turnoSeleccionado}
-
-Total en caja: ${fmt(totalCaja)}
-Ventas Postnet: ${fmt(ventasPostnet)}
-Ventas efectivo: ${fmt(ventasEfectivo)}
-
-Caja retirada: ${fmt(cajaRetirar)}
-Cambio turno siguiente: ${fmt(cambioSig)}`;
-    
-    document.getElementById('wspTexto').value = mensaje;
-    
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2000);
-  }
-
-  // REGISTRO DEL SERVICE WORKER (Para la PWA)
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('Service Worker registrado con éxito', reg))
-        .catch(err => console.error('Error al registrar el Service Worker', err));
-    });
-  }
-    const supabase = supabase.createClient(
+  // 1. Inicialización
+  const supabaseClient = supabase.createClient(
     'https://wbxwgboiwmabaskyeukj.supabase.co', 
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndieHdnYm9pd21hYmFza3lldWtqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NTg4MzksImV4cCI6MjA5ODMzNDgzOX0.JFFD5Z3k8j0PManMCMyrj1HMmFzR56rCKT7RAK3ln0g'
   );
+
+  async function procesarCierre(event) {
+    event.preventDefault();
+    
+    // Obtener valores
+    const total = document.getElementById('totalCaja').value;
+    const postnet = document.getElementById('ventasPostnet').value;
+    const efectivo = document.getElementById('ventasEfectivo').value;
+
+    // 2. Guardar en Supabase
+    const { error } = await supabaseClient
+      .from('cierre_caja')
+      .insert([{ monto: total, postnet: postnet, efectivo: efectivo }]);
+
+    if (error) {
+      alert("Error al guardar: " + error.message);
+    } else {
+      // 3. Redirigir a WhatsApp
+      const mensaje = `Cierre: Total $${total}, Postnet $${postnet}, Efectivo $${efectivo}`;
+      window.location.href = `https://api.whatsapp.com/send?phone=5491178276588&text=${encodeURIComponent(mensaje)}`;
+    }
+  }
 </script>
 </body>
 </html>
