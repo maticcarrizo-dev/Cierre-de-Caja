@@ -204,17 +204,17 @@
     .toast.show { transform: translateX(-50%) translateY(0); }
   </style>
 </head>
-<body>
+  <body>
 <header>
   <div class="header-icon">🧾</div>
   <div>
     <h1>Cierre de Caja</h1>
-    <span id="headerDate"></span>
+    <span id="headerDate">--/--/----</span>
   </div>
 </header>
 <div class="container">
   <div class="date-banner">
-    📅 <span id="dateLabel"></span>
+    📅 <span id="dateLabel">Cargando fecha...</span>
   </div>
   <div class="card">
     <div class="card-title">Turno</div>
@@ -274,16 +274,23 @@
 <div class="toast" id="toast">✓ Abriendo WhatsApp...</div>
 <script>
   let turnoSeleccionado = '';
-  const now = new Date();
-  
-  // SOLUCIÓN AL PROBLEMA DEL DÍA: Forzado estricto a Español de Argentina
-  const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const fechaLarga = now.toLocaleDateString('es-AR', opciones);
-  const fechaCorta = now.toLocaleDateString('es-AR');
-  
-  document.getElementById('dateLabel').textContent = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
-  document.getElementById('headerDate').textContent = fechaCorta;
-
+  let fechaCorta = '';
+  try {
+    const now = new Date();
+    fechaCorta = now.toLocaleDateString('es-AR');
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    let fechaLarga = now.toLocaleDateString('es-AR', opciones);
+    if (fechaLarga && fechaLarga.length > 0) {
+      fechaLarga = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
+    }
+    document.getElementById('dateLabel').textContent = fechaLarga || fechaCorta;
+    document.getElementById('headerDate').textContent = fechaCorta;
+  } catch (e) {
+    const d = new Date();
+    fechaCorta = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+    document.getElementById('dateLabel').textContent = "Cierre de Caja Diario";
+    document.getElementById('headerDate').textContent = fechaCorta;
+  }
   function selectTurno(turno) {
     turnoSeleccionado = turno;
     document.getElementById('btnManana').classList.toggle('active', turno === 'Mañana');
@@ -311,7 +318,19 @@
 💰 Total en caja: ${fmt(totalCaja)}
 💳 Ventas Postnet: ${fmt(ventasPostnet)}
 💵 Ventas efectivo: ${fmt(ventasEfectivo)}
+
 🏧 Caja retirada: ${fmt(cajaRetirar)}
-🔄 Cambio turno siguiente: ${fmt(cambioSig)}
-; const numero = '5491178276588'; 
-const url =  https://whatsapp.com{numero}&text=${encodeURIComponent(mensaje)}`;const toast = document.getElementById('toast');toast.classList.add('show');setTimeout(() => {toast.classList.remove('show');window.location.href = url; // Envía directo en vez de abrir una ventana popup bloqueable}, 400);}
+🔄 Cambio turno siguiente: ${fmt(cambioSig)}`;
+    const numero = '5491178276588';
+    const url = `https://whatsapp.com{numero}&text=${encodeURIComponent(mensaje)}`;
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+      window.location.href = url;
+    }, 400);
+  }
+</script>
+</body>
+</html>
+
