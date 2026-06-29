@@ -1,25 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	<title></title>
-	<meta name="generator" content="LibreOffice 26.2.3.2 (Linux)"/>
-	<meta name="created" content="00:00:00"/>
-	<meta name="changed" content="00:00:00"/>
-	<style type="text/css">
-		@page { size: 8.27in 11.69in; margin: 0.79in }
-		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
-		pre { font-size: 10pt; font-family: "Liberation Mono", monospace; background: transparent }
-	</style>
-</head>
-<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;es&quot;&gt;
-&lt;head&gt;
-  &lt;meta charset=&quot;UTF-8&quot; /&gt;
-  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;/&gt;
-  &lt;title&gt;Cierre de Caja&lt;/title&gt;
-  &lt;style&gt;
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cierre de Caja</title>
+  <style>
+    @import url('https://googleapis.com');
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -175,7 +161,7 @@
       pointer-events: none;
     }
 
-    input[type=&quot;number&quot;] {
+    input[type="number"] {
       width: 100%;
       background: var(--input-bg);
       border: 1.5px solid var(--border);
@@ -190,10 +176,10 @@
       -moz-appearance: textfield;
     }
 
-    input[type=&quot;number&quot;]::-webkit-outer-spin-button,
-    input[type=&quot;number&quot;]::-webkit-inner-spin-button { -webkit-appearance: none; }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
-    input[type=&quot;number&quot;]:focus {
+    input[type="number"]:focus {
       border-color: var(--accent);
     }
 
@@ -247,156 +233,88 @@
     }
 
     .toast.show { transform: translateX(-50%) translateY(0); }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
+  </style>
+</head>
+<body>
 
-&lt;header&gt;
-  &lt;div class=&quot;header-icon&quot;&gt;🧾&lt;/div&gt;
-  &lt;div&gt;
-    &lt;h1&gt;Cierre de Caja&lt;/h1&gt;
-    &lt;span id=&quot;headerDate&quot;&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/header&gt;
+<header>
+  <div class="header-icon">🧾</div>
+  <div>
+    <h1>Cierre de Caja</h1>
+    <span id="headerDate"></span>
+  </div>
+</header>
 
-&lt;div class=&quot;container&quot;&gt;
+<div class="container">
 
-  &lt;!-- Fecha --&gt;
-  &lt;div class=&quot;date-banner&quot;&gt;
-    📅 &lt;span id=&quot;dateLabel&quot;&gt;&lt;/span&gt;
-  &lt;/div&gt;
+  <!-- Fecha -->
+  <div class="date-banner">
+    📅 <span id="dateLabel"></span>
+  </div>
 
-  &lt;!-- Turno --&gt;
-  &lt;div class=&quot;card&quot;&gt;
-    &lt;div class=&quot;card-title&quot;&gt;Turno&lt;/div&gt;
-    &lt;div class=&quot;shift-row&quot;&gt;
-      &lt;button class=&quot;shift-btn&quot; id=&quot;btnManana&quot; onclick=&quot;selectTurno('Mañana')&quot;&gt;🌅 Mañana&lt;/button&gt;
-      &lt;button class=&quot;shift-btn&quot; id=&quot;btnTarde&quot; onclick=&quot;selectTurno('Tarde')&quot;&gt;🌆 Tarde&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
+  <!-- Turno -->
+  <div class="card">
+    <div class="card-title">Turno</div>
+    <div class="shift-row">
+      <button class="shift-btn" id="btnManana" onclick="selectTurno('Mañana')">🌅 Mañana</button>
+      <button class="shift-btn" id="btnTarde" onclick="selectTurno('Tarde')">🌆 Tarde</button>
+    </div>
+  </div>
 
-  &lt;!-- Ventas --&gt;
-  &lt;div class=&quot;card&quot;&gt;
-    &lt;div class=&quot;card-title&quot;&gt;Ventas del turno&lt;/div&gt;
+  <!-- Ventas -->
+  <div class="card">
+    <div class="card-title">Ventas del turno</div>
 
-    &lt;div class=&quot;field&quot;&gt;
-      &lt;label&gt;💰 Total en caja&lt;/label&gt;
-      &lt;div class=&quot;input-wrap&quot;&gt;
-        &lt;span class=&quot;peso&quot;&gt;$&lt;/span&gt;
-        &lt;input type=&quot;number&quot; id=&quot;totalCaja&quot; placeholder=&quot;0&quot; inputmode=&quot;decimal&quot; /&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+    <div class="field">
+      <label>💰 Total en caja</label>
+      <div class="input-wrap">
+        <span class="peso">$</span>
+        <input type="number" id="totalCaja" placeholder="0" inputmode="decimal" />
+      </div>
+    </div>
 
-    &lt;div class=&quot;field&quot;&gt;
-      &lt;label&gt;💳 Ventas por Postnet&lt;/label&gt;
-      &lt;div class=&quot;input-wrap&quot;&gt;
-        &lt;span class=&quot;peso&quot;&gt;$&lt;/span&gt;
-        &lt;input type=&quot;number&quot; id=&quot;ventasPostnet&quot; placeholder=&quot;0&quot; inputmode=&quot;decimal&quot; /&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+    <div class="field">
+      <label>💳 Ventas por Postnet</label>
+      <div class="input-wrap">
+        <span class="peso">$</span>
+        <input type="number" id="ventasPostnet" placeholder="0" inputmode="decimal" />
+      </div>
+    </div>
 
-    &lt;div class=&quot;field&quot;&gt;
-      &lt;label&gt;💵 Ventas en efectivo&lt;/label&gt;
-      &lt;div class=&quot;input-wrap&quot;&gt;
-        &lt;span class=&quot;peso&quot;&gt;$&lt;/span&gt;
-        &lt;input type=&quot;number&quot; id=&quot;ventasEfectivo&quot; placeholder=&quot;0&quot; inputmode=&quot;decimal&quot; /&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
+    <div class="field">
+      <label>💵 Ventas en efectivo</label>
+      <div class="input-wrap">
+        <span class="peso">$</span>
+        <input type="number" id="ventasEfectivo" placeholder="0" inputmode="decimal" />
+      </div>
+    </div>
+  </div>
 
-  &lt;!-- Retiro y cambio --&gt;
-  &lt;div class=&quot;card&quot;&gt;
-    &lt;div class=&quot;card-title&quot;&gt;Cierre&lt;/div&gt;
+</div>
 
-    &lt;div class=&quot;field&quot;&gt;
-      &lt;label&gt;🏧 Caja a retirar&lt;/label&gt;
-      &lt;div class=&quot;input-wrap&quot;&gt;
-        &lt;span class=&quot;peso&quot;&gt;$&lt;/span&gt;
-        &lt;input type=&quot;number&quot; id=&quot;cajaRetirar&quot; placeholder=&quot;0&quot; inputmode=&quot;decimal&quot; /&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+<div class="toast" id="toast">¡Datos listos!</div>
 
-    &lt;div class=&quot;field&quot;&gt;
-      &lt;label&gt;🔄 Cambio para el turno siguiente&lt;/label&gt;
-      &lt;div class=&quot;input-wrap&quot;&gt;
-        &lt;span class=&quot;peso&quot;&gt;$&lt;/span&gt;
-        &lt;input type=&quot;number&quot; id=&quot;cambioSiguiente&quot; placeholder=&quot;0&quot; inputmode=&quot;decimal&quot; /&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;!-- Botón WhatsApp --&gt;
-  &lt;button class=&quot;send-btn&quot; onclick=&quot;enviarWhatsApp()&quot;&gt;
-    &lt;svg viewBox=&quot;0 0 24 24&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
-      &lt;path d=&quot;M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z&quot;/&gt;
-    &lt;/svg&gt;
-    Enviar por WhatsApp
-  &lt;/button&gt;
-
-&lt;/div&gt;
-
-&lt;div class=&quot;toast&quot; id=&quot;toast&quot;&gt;✓ Abriendo WhatsApp...&lt;/div&gt;
-
-&lt;script&gt;
-  let turnoSeleccionado = '';
-
-  // Mostrar fecha actual
-  const now = new Date();
+<script>
+  // Inicialización de fechas automáticas
   const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const fechaLarga = now.toLocaleDateString('es-AR', opciones);
-  const fechaCorta = now.toLocaleDateString('es-AR');
+  const fechaActual = new Date().toLocaleDateString('es-ES', opciones);
+  document.getElementById('headerDate').innerText = fechaActual;
+  document.getElementById('dateLabel').innerText = fechaActual;
 
-  document.getElementById('dateLabel').textContent = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
-  document.getElementById('headerDate').textContent = fechaCorta;
+  let turnoSeleccionado = '';
 
   function selectTurno(turno) {
     turnoSeleccionado = turno;
-    document.getElementById('btnManana').classList.toggle('active', turno === 'Mañana');
-    document.getElementById('btnTarde').classList.toggle('active', turno === 'Tarde');
-  }
-
-  function fmt(val) {
-    const n = parseFloat(val) || 0;
-    return '$' + n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-
-  function enviarWhatsApp() {
-    if (!turnoSeleccionado) {
-      alert('Por favor seleccioná el turno antes de enviar.');
-      return;
+    document.getElementById('btnManana').classList.remove('active');
+    document.getElementById('btnTarde').classList.remove('active');
+    
+    if(turno === 'Mañana') {
+      document.getElementById('btnManana').classList.add('active');
+    } else {
+      document.getElementById('btnTarde').classList.add('active');
     }
-
-    const totalCaja     = document.getElementById('totalCaja').value;
-    const ventasPostnet = document.getElementById('ventasPostnet').value;
-    const ventasEfectivo= document.getElementById('ventasEfectivo').value;
-    const cajaRetirar   = document.getElementById('cajaRetirar').value;
-    const cambioSig     = document.getElementById('cambioSiguiente').value;
-
-    const mensaje =
-`🧾 *CIERRE DE CAJA*
-📅 Fecha: ${fechaCorta}
-🕐 Turno: ${turnoSeleccionado}
-
-💰 Total en caja: ${fmt(totalCaja)}
-💳 Ventas Postnet: ${fmt(ventasPostnet)}
-💵 Ventas efectivo: ${fmt(ventasEfectivo)}
-
-🏧 Caja retirada: ${fmt(cajaRetirar)}
-🔄 Cambio turno siguiente: ${fmt(cambioSig)}`;
-
-    // Número destino: 11 7827 6588 → código Argentina 54
-    const numero = '5491178276588';
-    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-
-    // Toast
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() =&gt; toast.classList.remove('show'), 2500);
-
-    setTimeout(() =&gt; window.open(url, '_blank'), 300);
   }
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
+</script>
+
 </body>
 </html>
