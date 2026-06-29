@@ -2,6 +2,7 @@ const CACHE_NAME = 'caja-v1';
 const ASSETS = [
   './',
   'index.html',
+  'cierre.html'
   'manifest.json'
 ];
 
