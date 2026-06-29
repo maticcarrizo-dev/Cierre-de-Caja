@@ -6,52 +6,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Cierre de Caja</title>
   <style>
-    :root { --bg-color: #fbfbfd; --card-bg: #ffffff; --text-main: #1d1d1f; --blue-accent: #0071e3; }
-    body { background-color: var(--bg-color); color: var(--text-main); font-family: -apple-system, sans-serif; padding: 20px; display: flex; justify-content: center; }
-    .widget-container { background: var(--card-bg); width: 100%; max-width: 460px; border-radius: 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); padding: 24px; }
-    .field { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #d2d2d7; }
-    input { border: none; text-align: right; outline: none; font-size: 15px; }
-    .submit-btn { width: 100%; background: var(--blue-accent); color: white; border: none; border-radius: 8px; padding: 12px; cursor: pointer; margin-top: 20px; }
+    :root { --bg: #fbfbfd; --text: #1d1d1f; --blue: #0071e3; --gray: #d2d2d7; }
+    body { background: var(--bg); font-family: -apple-system, sans-serif; padding: 20px; display: flex; justify-content: center; }
+    .container { width: 100%; max-width: 460px; background: white; padding: 24px; border-radius: 18px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    h1 { font-size: 22px; margin-bottom: 20px; text-align: center; }
+    .segmented-control { display: flex; background: #e8e8ed; border-radius: 8px; padding: 2px; margin-bottom: 20px; }
+    .shift-btn { flex: 1; padding: 8px; border: none; border-radius: 6px; cursor: pointer; background: transparent; }
+    .shift-btn.active { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-weight: 600; }
+    .field { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray); align-items: center; }
+    input { width: 120px; border: none; text-align: right; font-size: 16px; outline: none; }
+    .submit-btn { width: 100%; background: var(--blue); color: white; border: none; border-radius: 12px; padding: 15px; margin-top: 20px; font-weight: 600; }
   </style>
 </head>
 <body>
 
-<div class="widget-container">
+<div class="container">
   <h1>Cierre de Caja</h1>
+  
+  <div class="segmented-control">
+    <button class="shift-btn" id="btnMañana" onclick="selectTurno('Mañana')">Mañana</button>
+    <button class="shift-btn" id="btnTarde" onclick="selectTurno('Tarde')">Tarde</button>
+  </div>
+
   <form id="formCaja" onsubmit="procesarCierre(event)">
-    <div class="field"><label>Total caja</label><input type="number" id="totalCaja" required /></div>
-    <div class="field"><label>Postnet</label><input type="number" id="ventasPostnet" required /></div>
-    <div class="field"><label>Efectivo</label><input type="number" id="ventasEfectivo" required /></div>
+    <div class="field"><label>Total caja</label><div>$ <input type="number" id="totalCaja" required></div></div>
+    <div class="field"><label>Postnet</label><div>$ <input type="number" id="ventasPostnet" required></div></div>
+    <div class="field"><label>Efectivo</label><div>$ <input type="number" id="ventasEfectivo" required></div></div>
+    <div class="field"><label>Caja a retirar</label><div>$ <input type="number" id="cajaRetirar" required></div></div>
+    <div class="field"><label>Cambio siguiente</label><div>$ <input type="number" id="cambioSiguiente" required></div></div>
     <button type="submit" class="submit-btn">Guardar y Enviar</button>
   </form>
 </div>
 
 <script>
-  // 1. Inicialización
+  // RECUERDA: Regenera tu API Key en Supabase Settings > API y pégala aquí
   const supabaseClient = supabase.createClient(
     'https://wbxwgboiwmabaskyeukj.supabase.co', 
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndieHdnYm9pd21hYmFza3lldWtqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NTg4MzksImV4cCI6MjA5ODMzNDgzOX0.JFFD5Z3k8j0PManMCMyrj1HMmFzR56rCKT7RAK3ln0g'
   );
 
+  let turnoSeleccionado = '';
+  function selectTurno(turno) {
+    turnoSeleccionado = turno;
+    document.getElementById('btnMañana').classList.toggle('active', turno === 'Mañana');
+    document.getElementById('btnTarde').classList.toggle('active', turno === 'Tarde');
+  }
+
   async function procesarCierre(event) {
     event.preventDefault();
-    
-    // Obtener valores
-    const total = document.getElementById('totalCaja').value;
-    const postnet = document.getElementById('ventasPostnet').value;
-    const efectivo = document.getElementById('ventasEfectivo').value;
+    if (!turnoSeleccionado) return alert('Por favor, selecciona un turno');
 
-    // 2. Guardar en Supabase
-    const { error } = await supabaseClient
-      .from('cierre_caja')
-      .insert([{ monto: total, postnet: postnet, efectivo: efectivo }]);
+    const dataCierre = {
+      turno: turnoSeleccionado,
+      total_caja: document.getElementById('totalCaja').value,
+      postnet: document.getElementById('ventasPostnet').value,
+      efectivo: document.getElementById('ventasEfectivo').value,
+      retirar: document.getElementById('cajaRetirar').value,
+      cambio_siguiente: document.getElementById('cambioSiguiente').value
+    };
+
+    const { error } = await supabaseClient.from('cierre_caja').insert([dataCierre]);
 
     if (error) {
       alert("Error al guardar: " + error.message);
     } else {
-      // 3. Redirigir a WhatsApp
-      const mensaje = `Cierre: Total $${total}, Postnet $${postnet}, Efectivo $${efectivo}`;
-      window.location.href = `https://api.whatsapp.com/send?phone=5491178276588&text=${encodeURIComponent(mensaje)}`;
+      const msg = `Cierre ${dataCierre.turno}: Total $${dataCierre.total_caja}, Postnet $${dataCierre.postnet}, Efec $${dataCierre.efectivo}, Retirar $${dataCierre.retirar}, Cambio $${dataCierre.cambio_siguiente}`;
+      window.location.href = `https://api.whatsapp.com/send?phone=5491178276588&text=${encodeURIComponent(msg)}`;
     }
   }
 </script>
