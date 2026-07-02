@@ -1,80 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>Bienvenido</title>
-  <style>
-    :root {
-      --bg: #f5f5f7;
-      --icon-placeholder: #e5e5ea;
-      --text: #1d1d1f;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Bienvenido</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --bg:#f2f2f7;
+    --text:#1d1d1f;
+    --text-secondary:#8e8e93;
+    --blue:#007aff;
+  }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 80px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-    .container { width: 100%; max-width: 600px; }
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--bg);
+    font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:var(--text);
+    min-height:100vh;
+  }
 
-    h1 { font-size: 48px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 60px; }
+  body{
+    display:flex;
+    justify-content:center;
+    padding:64px 20px 40px;
+  }
 
-    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+  .screen{
+    width:100%;
+    max-width:420px;
+  }
 
-    .app-box { 
-      display: flex; flex-direction: column; align-items: center; 
-      text-decoration: none; color: var(--text); transition: opacity 0.2s ease; 
-    }
+  .header{ margin-bottom:44px; }
 
-    .app-box:hover { opacity: 0.7; }
-    .app-box:active { transform: scale(0.95); }
+  .eyebrow{
+    font-size:13px;
+    font-weight:590;
+    color:var(--blue);
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+    margin-bottom:4px;
+  }
 
-    .icon-placeholder {
-      width: 120px; height: 120px; background-color: var(--icon-placeholder);
-      border-radius: 28px; margin-bottom: 16px; display: flex;
-      align-items: center; justify-content: center;
-    }
+  h1{
+    font-size:34px;
+    font-weight:700;
+    letter-spacing:-0.4px;
+    margin:0 0 4px;
+  }
 
-    .label { font-size: 14px; font-weight: 400; }
-  </style>
+  .subtitle{
+    font-size:15px;
+    color:var(--text-secondary);
+    text-transform:capitalize;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px 20px;
+  }
+
+  .app-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-decoration:none;
+    color:var(--text);
+    -webkit-user-select:none;
+    user-select:none;
+  }
+
+  .icon{
+    width:112px;
+    height:112px;
+    border-radius:26px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.25);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .icon svg{ width:48px; height:48px; }
+
+  .app-box:active .icon{
+    transform:scale(0.93);
+    box-shadow:0 3px 8px rgba(0,0,0,0.14);
+  }
+
+  .icon.cierre{ background:linear-gradient(160deg, #4cd964, #2ea84a); }
+  .icon.pedidos{ background:linear-gradient(160deg, #32ade6, #0a7fc2); }
+  .icon.reportes{ background:linear-gradient(160deg, #c46fe0, #9a3fc0); }
+  .icon.ajustes{ background:linear-gradient(160deg, #a9aab0, #7b7c82); }
+
+  .label{
+    font-size:14px;
+    font-weight:500;
+  }
+
+  .status{
+    font-size:11px;
+    color:var(--text-secondary);
+    margin-top:1px;
+  }
+
+  /* Apps sin construir todavía: presentes pero no interactivas */
+  .app-box.soon{
+    pointer-events:none;
+  }
+
+  .app-box.soon .icon{
+    box-shadow:none;
+    opacity:0.55;
+  }
+
+  .app-box.soon .label{ color:var(--text-secondary); }
+</style>
 </head>
 <body>
 
-<div class="container">
-  <h1>Bienvenido.</h1>
+<div class="screen">
+
+  <div class="header">
+    <div class="eyebrow">Kiosco</div>
+    <h1 id="saludo">Bienvenido</h1>
+    <div class="subtitle" id="fechaHoy"></div>
+  </div>
 
   <div class="grid">
+
     <a href="cierre.html" class="app-box">
-      <div class="icon-placeholder"></div>
+      <div class="icon cierre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 21V5a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v16"/>
+        </svg>
+      </div>
       <span class="label">Cierre</span>
     </a>
-    <a href="#" class="app-box">
-      <div class="icon-placeholder"></div>
+
+    <a href="#" class="app-box soon">
+      <div class="icon pedidos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 8V21H3V8"/>
+          <path d="M1 3h22v5H1z"/>
+          <path d="M10 12h4"/>
+        </svg>
+      </div>
       <span class="label">Pedidos</span>
+      <span class="status">Próximamente</span>
     </a>
-    <a href="#" class="app-box">
-      <div class="icon-placeholder"></div>
+
+    <a href="#" class="app-box soon">
+      <div class="icon reportes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <rect x="7" y="12" width="3" height="6"/>
+          <rect x="12" y="8" width="3" height="10"/>
+          <rect x="17" y="5" width="3" height="13"/>
+        </svg>
+      </div>
       <span class="label">Reportes</span>
+      <span class="status">Próximamente</span>
     </a>
-    <a href="#" class="app-box">
-      <div class="icon-placeholder"></div>
+
+    <a href="#" class="app-box soon">
+      <div class="icon ajustes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </div>
       <span class="label">Ajustes</span>
+      <span class="status">Próximamente</span>
     </a>
+
   </div>
 </div>
 
 <script>
   // Inicialización del cliente de Supabase
   const supabaseClient = supabase.createClient(
-    'https://wbxwgboiwmabaskyeukj.supabase.co', 
+    'https://wbxwgboiwmabaskyeukj.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndieHdnYm9pd21hYmFza3lldWtqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NTg4MzksImV4cCI6MjA5ODMzNDgzOX0.JFFD5Z3k8j0PManMCMyrj1HMmFzR56rCKT7RAK3ln0g'
   );
 
@@ -84,7 +197,13 @@
       window.location.href = 'login.html';
     }
   });
-</script>
 
+  // Saludo según la hora y fecha del día
+  const hora = new Date().getHours();
+  const saludo = hora < 12 ? 'Buen día.' : hora < 20 ? 'Buenas tardes.' : 'Buenas noches.';
+  document.getElementById('saludo').textContent = saludo;
+  document.getElementById('fechaHoy').textContent =
+    new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+</script>
 </body>
 </html>
