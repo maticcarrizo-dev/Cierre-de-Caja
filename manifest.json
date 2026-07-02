@@ -1,8 +1,8 @@
 {
-  "name": "Control de Caja",
-  "short_name": "Caja",
+  "name": "Maxikiosco",
+  "short_name": "Kiosco",
   "description": "Formulario de cierre de caja rápido para envío por WhatsApp.",
-  "start_url": "index.html",
+  "start_url": "login.html",
   "display": "standalone",
   "background_color": "#fbfbfd",
   "theme_color": "#0071e3",
